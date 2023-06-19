@@ -17,12 +17,14 @@ run = True
 
 while run:
     clock.tick(FPS)
+    guesses = []
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            True
+        if event.type == pygame.KEYDOWN:
+            if len(pygame.key.name(event.key)) == 1 and pygame.key.name(event.key).isalpha():
+                print(pygame.key.name(event.key))
     
     DISPLAY.blit(BACKGROUND, (0,0))
     pygame.display.flip()
