@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 
 run = True
 guesses = []
-word = "Orgrimmar"
+word = "Orgrimmar".upper()
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 
@@ -25,7 +25,7 @@ def draw():
     display_word = ""
     for letter in word:
         if letter in guesses:
-            display_word += letter + ""
+            display_word += letter + " "
         else:
             display_word += "_ "
     text = FONT.render(display_word, 1, BLACK)
@@ -38,7 +38,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.KEYDOWN:
-            input = pygame.key.name(event.key)
+            input = pygame.key.name(event.key).upper()
             if len(input) == 1 and input.isalpha() and input not in guesses:
                 guesses.append(input)
                 print("You have guessed", ', '.join(map(str, guesses)))
