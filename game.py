@@ -15,9 +15,21 @@ clock = pygame.time.Clock()
 
 run = True
 guesses = []
+word = "Orgrimmar"
+BLACK = (0,0,0)
+WHITE = (255,255,255)
 
-def print_guess(guess):
-    print(guess)
+FONT = pygame.font.SysFont('dejavusansmono', 40)
+
+def draw():
+    display_word = ""
+    for letter in word:
+        if letter in guesses:
+            display_word += letter + ""
+        else:
+            display_word += "_ "
+    text = FONT.render(display_word, 1, BLACK)
+    DISPLAY.blit(text, (700,200))
 
 while run:
     clock.tick(FPS)
@@ -32,6 +44,7 @@ while run:
                 print("You have guessed", ', '.join(map(str, guesses)))
     
     DISPLAY.blit(BACKGROUND, (0,0))
+    draw()
     pygame.display.flip()
 
 pygame.quit()
