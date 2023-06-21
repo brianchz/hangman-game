@@ -14,14 +14,22 @@ pygame.display.set_caption(NAME)
 clock = pygame.time.Clock()
 
 hangman_status = 0
+hangman_images = []
+for i in range(7):
+    image = pygame.image.load("hangman_" + str(i)+ ".png")
+    scaled_image = pygame.transform.scale(image, (640, 480))
+    hangman_images.append(scaled_image)
+
+
 guesses = []
 word = "Orgrimmar".upper()
 BLACK = (0,0,0)
 WHITE = (255,255,255)
+RED = (136,8,8)
 
 FONT = pygame.font.SysFont('dejavusansmono', 40)
 
-def draw():
+def display_word():
     display_word = ""
     for letter in word:
         if letter in guesses:
@@ -31,12 +39,22 @@ def draw():
     text = FONT.render(display_word, 1, BLACK)
     DISPLAY.blit(text, (700,200))
 
+def display_guesses():
+    incorrect_guesses = "Incorrect Guesses: "
+    for guess in guesses:
+        if guess not in word:
+            incorrect_guesses += guess + " "
+    text = FONT.render(incorrect_guesses, 1 , RED)
+    DISPLAY.blit(text, (200, 600))
+    
 run = True
 
 while run:
     clock.tick(FPS)
     DISPLAY.blit(BACKGROUND, (0,0))
-    draw()
+    DISPLAY.blit(hangman_images[hangman_status], (0,0))
+    display_word()
+    display_guesses()
     pygame.display.flip()
 
     for event in pygame.event.get():
