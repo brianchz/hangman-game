@@ -13,7 +13,7 @@ pygame.display.set_caption(NAME)
 
 clock = pygame.time.Clock()
 
-run = True
+hangman_status = 0
 guesses = []
 word = "Orgrimmar".upper()
 BLACK = (0,0,0)
@@ -31,8 +31,13 @@ def draw():
     text = FONT.render(display_word, 1, BLACK)
     DISPLAY.blit(text, (700,200))
 
+run = True
+
 while run:
     clock.tick(FPS)
+    DISPLAY.blit(BACKGROUND, (0,0))
+    draw()
+    pygame.display.flip()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -42,9 +47,21 @@ while run:
             if len(input) == 1 and input.isalpha() and input not in guesses:
                 guesses.append(input)
                 print("You have guessed", ', '.join(map(str, guesses)))
+                if input not in word:
+                    hangman_status += 1
     
-    DISPLAY.blit(BACKGROUND, (0,0))
-    draw()
-    pygame.display.flip()
+    won = True
+    for letter in word:
+        if letter not in guesses:
+            won = False
+            break
+
+    if won:
+        print("won")
+        break
+
+    if hangman_status == 6:
+        print("lost")
+        break
 
 pygame.quit()
